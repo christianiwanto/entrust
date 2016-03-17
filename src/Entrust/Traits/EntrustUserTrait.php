@@ -26,7 +26,12 @@ trait EntrustUserTrait
     public function save(array $options = [])
     {   //both inserts and updates
         $result = parent::save($options);
-        Cache::tags(Config::get('entrust.role_user_table'))->flush();
+        
+        if ($result) {
+            Cache::tags(Config::get('entrust.role_user_table'))->flush();
+        }
+        
+        return $result;
     }
     public function delete(array $options = [])
     {   //soft or hard
